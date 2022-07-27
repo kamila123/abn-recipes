@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: "abn-recipes"
+
+server:
+  servlet:
+    context-path: /api
+
+management:
+  endpoint:
+    info:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,loggers
+
+database:
+  mongodb:
+    url: mongodb://localhost:27017/
+    name: recipe
