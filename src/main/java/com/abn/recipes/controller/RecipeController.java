@@ -26,23 +26,23 @@ public class RecipeController {
         var r = RecipeDTO.toDTO(recipeService.save(recipeDTO));
         return ResponseEntity.ok(r);
     }
-
-    @Operation(method = "Update a recipe", summary = "Update recipe")
+    
     @PutMapping("/{id}")
-    public ResponseEntity<Recipe> updateRecipe(@PathVariable String id, @RequestBody @Valid RecipeDTO recipeVO) {
-        var r = recipeService.update(id, recipeVO);
-        return ResponseEntity.ok(r);
+    @Operation(method = "Update a recipe", summary = "Update recipe")
+    public ResponseEntity<RecipeDTO> updateRecipe(@PathVariable String id, @RequestBody @Valid RecipeDTO recipeVO) {
+        var recipe = RecipeDTO.toDTO(recipeService.update(id, recipeVO));
+        return ResponseEntity.ok(recipe);
     }
-
-    @Operation(method = "Delete a recipe", summary = "Delete a recipe")
+    
     @DeleteMapping("/{id}")
+    @Operation(method = "Delete a recipe", summary = "Delete a recipe")
     public ResponseEntity<String> removeRecipe(@PathVariable String id) {
         recipeService.delete(id);
         return ResponseEntity.ok("successfully deleted " + id);
     }
-
-    @Operation(method = "Find recipes by filters", summary = "Find recipes")
+    
     @GetMapping
+    @Operation(method = "Find recipes by filters", summary = "Find recipes")
     public List<RecipeDTO> findRecipes(@RequestParam(required = false) String name,
                                        @RequestParam(required = false) Integer servings,
                                        @RequestParam(required = false) String exclude,

@@ -47,12 +47,11 @@ public class RecipesService {
 
 
     public Recipe update(String id, RecipeDTO recipeVO) {
+        
+        recipeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe doesn't exist"));
 
-        Optional<Recipe> savedRecipe = recipeRepository.findById(id);
-
-        savedRecipe.orElseThrow(() -> new ResourceNotFoundException("Recipe doesn't exist"));
-
-        recipeVO.setId(savedRecipe.get().id);
+        recipeVO.setId(id);
 
         var updatedRecipe = recipeRepository.save(RecipeDTO.toEntity(recipeVO));
 
